@@ -49,13 +49,13 @@ class StatisticsAction implements MiddlewareInterface
             $stats[$r->status] = $r->count;
         }
         $statistics = [
-            'red' => $stats[-1] ?? 0,
-            'orange' => $stats[0] ?? 0,
-            'green' => $stats[1] ?? 0,
-            'red_pct' => round(($stats[-1] ?? 0) / array_sum($stats) * 100, 1),
+            'red'        => $stats[-1] ?? 0,
+            'orange'     => $stats[0] ?? 0,
+            'green'      => $stats[1] ?? 0,
+            'red_pct'    => round(($stats[-1] ?? 0) / array_sum($stats) * 100, 1),
             'orange_pct' => round(($stats[0] ?? 0) / array_sum($stats) * 100, 1),
-            'green_pct' => round(($stats[1] ?? 0) / array_sum($stats) * 100, 1),
-            'total' => array_sum($stats),
+            'green_pct'  => round(($stats[1] ?? 0) / array_sum($stats) * 100, 1),
+            'total'      => array_sum($stats),
         ];
 
         return new JsonResponse($statistics);

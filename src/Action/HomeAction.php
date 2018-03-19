@@ -9,12 +9,9 @@ use App\Middleware\DbAdapterMiddleware;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Db\Metadata\Metadata;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Sql;
-use Zend\Db\Sql\Where;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Flash\FlashMessageMiddleware;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 

@@ -44,7 +44,7 @@ class ConfigProvider
             'invokables' => [
             ],
             'factories'  => [
-                Action\APIAction::class => Action\Factory\APIFactory::class,
+                Action\APIAction::class   => Action\Factory\APIFactory::class,
                 Action\CheckAction::class => Action\Factory\CheckFactory::class,
                 Action\HomeAction::class  => Action\Factory\HomeFactory::class,
             ],

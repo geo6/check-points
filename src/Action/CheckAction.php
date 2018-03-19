@@ -9,11 +9,9 @@ use App\Middleware\DbAdapterMiddleware;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Db\Metadata\Metadata;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Flash\FlashMessageMiddleware;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -71,13 +69,13 @@ class CheckAction implements MiddlewareInterface
             $stats[$r->status] = $r->count;
         }
         $statistics = [
-            'red' => $stats[-1] ?? 0,
-            'orange' => $stats[0] ?? 0,
-            'green' => $stats[1] ?? 0,
-            'red_pct' => round(($stats[-1] ?? 0) / array_sum($stats) * 100, 1),
+            'red'        => $stats[-1] ?? 0,
+            'orange'     => $stats[0] ?? 0,
+            'green'      => $stats[1] ?? 0,
+            'red_pct'    => round(($stats[-1] ?? 0) / array_sum($stats) * 100, 1),
             'orange_pct' => round(($stats[0] ?? 0) / array_sum($stats) * 100, 1),
-            'green_pct' => round(($stats[1] ?? 0) / array_sum($stats) * 100, 1),
-            'total' => array_sum($stats),
+            'green_pct'  => round(($stats[1] ?? 0) / array_sum($stats) * 100, 1),
+            'total'      => array_sum($stats),
         ];
 
         $select = $sql->select();
@@ -87,7 +85,7 @@ class CheckAction implements MiddlewareInterface
             'label_map' => $config['label']['map'],
             'status',
             'note',
-            'update' => new Expression('hstore_to_json("update")'),
+            'update'    => new Expression('hstore_to_json("update")'),
             'the_geog'  => new Expression('ST_AsGeoJSON("the_geog")'),
         ]);
         for ($i = 0; $i < count($config['group']); $i++) {
@@ -118,7 +116,7 @@ class CheckAction implements MiddlewareInterface
                     'label_map' => $r->label_map,
                     'status'    => $r->status,
                     'note'      => $r->note,
-                    'update'    => (!is_null($r->update) ? json_decode($r->update, TRUE) : null),
+                    'update'    => (!is_null($r->update) ? json_decode($r->update, true) : null),
                 ],
                 'geometry' => (!is_null($r->the_geog) ? json_decode($r->the_geog) : null),
             ];

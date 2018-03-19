@@ -32,12 +32,14 @@ class ObjectAction implements MiddlewareInterface
 
             case 'PUT':
                 $data = $request->getParsedBody();
+
                 return new JsonResponse($this->put($id, $data));
                 break;
         }
     }
 
-    private function get($id) {
+    private function get($id)
+    {
         $sql = new Sql($this->adapter, $this->config['postgresql']['table']);
 
         $select = $sql->select();
@@ -49,7 +51,8 @@ class ObjectAction implements MiddlewareInterface
         return $query->current();
     }
 
-    private function put($id, $data) {
+    private function put($id, $data)
+    {
         $sql = new Sql($this->adapter, $this->config['postgresql']['table']);
 
         $update = $sql->update();
