@@ -1,0 +1,116 @@
+<?php $this->layout('layout::default', ['title' => $title]) ?>
+
+<?php $this->start('stylesheet') ?>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+    .rotate-north {
+        left: .5em;
+        top: 70px;
+    }
+    .ol-touch .rotate-north {
+        top: 85px;
+    }
+    </style>
+<?php $this->stop() ?>
+
+<?php $this->start('scripts') ?>
+    <script>
+        window.app = {};
+        window.app.data = {
+            baselayers: <?=json_encode($baselayers)?>,
+            group: <?=json_encode($group)?>,
+            json: <?=json_encode($json).PHP_EOL?>
+        };
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    <script src="../js/check-point.min.js"></script>
+<?php $this->stop() ?>
+
+<div class="container">
+    <?php foreach ($group as $k => $g): ?>
+        <h2><?=ucfirst($this->translate($k))?> : <?=$this->escape($g)?></h2>
+    <?php endforeach ?>
+    <hr>
+    <div class="progress" style="height: auto; font-size: inherit;">
+        <div class="progress-bar bg-success" role="progressbar" style="width: <?=$statistics['green_pct']?>%" aria-valuenow="<?=$statistics['green_pct']?>" aria-valuemin="0" aria-valuemax="100"><?=round($statistics['green_pct'])?>%</div>
+        <div class="progress-bar bg-warning" role="progressbar" style="width: <?=$statistics['orange_pct']?>%" aria-valuenow="<?=$statistics['orange_pct']?>" aria-valuemin="0" aria-valuemax="100"><?=round($statistics['orange_pct'])?>%</div>
+        <div class="progress-bar bg-danger" role="progressbar" style="width: <?=$statistics['red_pct']?>%" aria-valuenow="<?=$statistics['red_pct']?>" aria-valuemin="0" aria-valuemax="100"><?=round($statistics['red_pct'])?>%</div>
+    </div>
+    <hr>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-md-4">
+            <table id="results" class="table table-bordered table-hover table-sm mb-0">
+                <thead>
+                    <tr>
+                        <th colspan="2"><?=$this->translate('Point')?></th>
+                        <th colspan="2" class="text-center"><i class="fas fa-pen-square"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($json['features'] as $feat): ?>
+                    <tr class="table-<?=($feat['properties']['status'] === 1 ? 'success' : ($feat['properties']['status'] === 0 ? 'warning' : 'danger'))?>" data-id="<?=$feat['id']?>">
+                        <td><?=$this->escape($feat['properties']['label'])?></td>
+                        <td class="text-center">
+                            <a href="#" class="fa-layers fa-fw" data-toggle="modal" data-target="#modal-info" data-id="<?=$feat['id']?>">
+                            <?php if (empty($feat['properties']['note'])) : ?>
+                                <i class="fas fa-circle text-muted"></i>
+                            <?php else : ?>
+                                <i class="fas fa-circle text-primary"></i>
+                            <?php endif ?>
+                                <i class="fa-inverse fas fa-info" data-fa-transform="shrink-7"></i>
+                            </a>
+                        </td>
+                    <?php if (!is_null($feat['properties']['update'])) : ?>
+                        <td class="text-center" style="min-width: 25px;" data-toggle="tooltip" title="<?=$feat['properties']['update']['datetime']?>">
+                            <i class="fas fa-user fa-fw text-success"></i>
+                        </td>
+                    <?php else : ?>
+                        <td class="text-center" style="min-width: 25px;"></td>
+                    <?php endif ?>
+                        <td class="text-center">
+                            <input type="radio" name="edit" value="<?=$feat['id']?>">
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <div id="map" class="map">
+                <div class="overlay-container">
+                    <?php if (!empty($baselayers)) : ?>
+                    <select id="baselayers" class="form-control form-control-sm" autocomplete="off">
+                        <option value="0">OpenStreetMap</option>
+                        <?php foreach($baselayers as $b => $baselayer) : ?>
+                            <option value="<?=($b+1)?>"><?=$this->translate($baselayer['name'])?></option>
+                        <?php endforeach ?>
+                    </select>
+                    <?php endif ?>
+                    <div id="nominatim">
+                        <form action="//nominatim.openstreetmap.org/search" method="get" autocomplete="off">
+                            <div class="input-group input-group-sm">
+                                <input id="nominatim-query" name="q" type="text" class="form-control" placeholder="<?=$this->translate('Search')?>">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                        <small class="form-text text-muted text-right">
+                            Data © <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors
+                        </small>
+                        <div id="nominatim-result"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?=$this->fetch('partial.modal::info', $this->data())?>
+<?=$this->fetch('partial.modal::streetview', $this->data())?>

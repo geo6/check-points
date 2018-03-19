@@ -1,0 +1,42 @@
+<?php $this->layout('layout::default', ['title' => $title]) ?>
+
+<?php $this->start('stylesheet') ?>
+    <link rel="stylesheet" href="./css/style.css">
+<?php $this->stop() ?>
+
+<div class="container">
+    <h1><?=$this->translate($title)?></h1>
+    <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In accumsan nisl lacus, ut hendrerit tellus tincidunt a. Quisque a mauris vel massa faucibus dictum. Praesent non mattis velit. Quisque sed nulla maximus, maximus tortor non, fringilla nunc. Vivamus accumsan in sapien sed porta. Curabitur arcu orci, dignissim in tincidunt id, bibendum mattis justo. Maecenas condimentum sollicitudin est. Quisque metus tellus, pharetra nec magna id, sodales hendrerit velit. Nullam at posuere eros, ac imperdiet leo. Nam tristique urna odio, et lobortis arcu suscipit a. Vivamus non leo libero.
+    </p>
+    <hr>
+    <?php foreach ($group as $k => $g): ?>
+        <h2><?=ucfirst($this->translate($k))?> : <?=$this->escape($g)?></h2>
+    <?php endforeach ?>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th><?=ucfirst($this->translate($current))?></th>
+                <th><?=$this->translate('Items')?></th>
+                <th><?=$this->translate('Progress')?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($statistics as $k => $s): ?>
+            <tr>
+                <th>
+                    <a href="<?=($last === true || (!is_null($limit) && $s['total'] <= $limit) ? './check/?' : './?').http_build_query($group).'&amp;'.$this->escape($current)?>=<?=$this->escape($k)?>"><?=$this->escape($k)?></a>
+                </th>
+                <td class="text-right"><?=$s['total']?></td>
+                <td style="width: 50%;">
+                    <div class="progress" style="height: auto; font-size: inherit;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: <?=$s['green_pct']?>%" aria-valuenow="<?=$s['green_pct']?>" aria-valuemin="0" aria-valuemax="100"><?=round($s['green_pct'])?>%</div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?=$s['orange_pct']?>%" aria-valuenow="<?=$s['orange_pct']?>" aria-valuemin="0" aria-valuemax="100"><?=round($s['orange_pct'])?>%</div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?=$s['red_pct']?>%" aria-valuenow="<?=$s['red_pct']?>" aria-valuemin="0" aria-valuemax="100"><?=round($s['red_pct'])?>%</div>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach ?>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,86 @@
+@import 'global';
+
+.container-fluid {
+    & > .row {
+        height: 100%;
+
+        & > .col {
+            height: 100%;
+            overflow-y: auto;
+        }
+    }
+}
+
+.tooltip {
+    font-size: small;
+}
+
+.map {
+    background-color: #ddd;
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    .ol-attribution.ol-logo-only,
+    .ol-attribution.ol-uncollapsible {
+        height: 1.5em !important;
+        max-width: calc(100% - 3em) !important;
+    }
+    .ol-control button, .ol-attribution, .ol-scale-line-inner {
+        font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif !important;
+    }
+
+    .overlay-container {
+        font-size: small;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        width: calc(25%) !important;
+        z-index: 999;
+
+        & > div {
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 4px;
+            padding: 5px;
+            margin-top: 5px;
+
+            &:first {
+                margin-top: 0;
+            }
+        }
+
+        #nominatim-result > ul {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-left: 0;
+        }
+        #nominatim-result > ul > li {
+            background-repeat: no-repeat;
+            background-position: left 7px;
+            cursor: pointer;
+            padding: 3px 0px 3px 23px;
+            list-style: none;
+            margin: 0;
+        }
+        #nominatim-result > ul > li:hover {
+            color: #808080;
+        }
+    }
+
+    .ol-tooltip {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        color: white;
+        font-size: .7rem;
+        opacity: 0.7;
+        padding: 4px 8px;
+        position: relative;
+        white-space: nowrap;
+    }
+}
+
+.btn-text {
+    font-size: 75%;
+    line-height: 1;
+    padding: .25em .4em;
+}
