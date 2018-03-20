@@ -14,8 +14,8 @@
 <?php $this->stop() ?>
 
 <?php $this->start('scripts') ?>
+    <script src="../js/check-point.min.js"></script>
     <script>
-        window.app = {};
         window.app.data = {
             baselayers: <?=json_encode($baselayers)?>,
             group: <?=json_encode($group)?>,
@@ -23,10 +23,17 @@
         };
 
         $(document).ready(function () {
+            window.app.fn.initHeight();
+            window.app.fn.initMap();
+            window.app.fn.initModalInfo();
+            window.app.fn.initNominatim();
+
             $('[data-toggle="tooltip"]').tooltip();
         });
+        $(window).on('resize', function () {
+            window.app.fn.initHeight();
+        });
     </script>
-    <script src="../js/check-point.min.js"></script>
 <?php $this->stop() ?>
 
 <div class="container">
