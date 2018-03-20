@@ -102,6 +102,7 @@ class HomeHandler implements RequestHandlerInterface
 
         $data = [
             'title'      => ucwords(substr($config['name'], strpos($config['name'], '/') + 1), '-'),
+            'params'     => $request->getQueryParams(),
             'group'      => $group,
             'current'    => $current,
             'last'       => ($current === end($config['group'])),

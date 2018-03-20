@@ -124,6 +124,7 @@ class CheckHandler implements RequestHandlerInterface
 
         $data = [
             'title'      => ucwords(substr($config['name'], strpos($config['name'], '/') + 1), '-'),
+            'params'     => $request->getQueryParams(),
             'group'      => $group,
             'json'       => $json,
             'statistics' => $statistics,

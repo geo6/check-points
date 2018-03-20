@@ -67,6 +67,7 @@ class LoginHandler implements RequestHandlerInterface
 
         $data = [
             'title'      => ucwords(substr($config['name'], strpos($config['name'], '/') + 1), '-'),
+            'params'     => $request->getQueryParams(),
             'message'    => $message ?? null,
             'redirectTo' => $query['redirect_to'] ?? null,
             'noLogin'    => isset($query['nologin']),

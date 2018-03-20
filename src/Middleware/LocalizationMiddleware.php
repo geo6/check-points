@@ -21,17 +21,17 @@ class LocalizationMiddleware implements MiddlewareInterface
         $server = $request->getServerParams();
 
         if (isset($query['lang']) && preg_match('/^(?P<locale>[a-z]{2,3}([-_][a-zA-Z]{2}|))$/', $query['lang'])) {
-            Locale::setDefault(Locale::canonicalize($query['lang']));
+            Locale::setDefault(Locale::getPrimaryLanguage($query['lang']));
 
             if (isset($cookies['lang'])) {
-                setcookie('lang', false, 0, '', '', (!empty($server['HTTPS'])), true);
+                setcookie('lang', '', time() - 3600);
             }
             setcookie('lang', Locale::getDefault(), 0, '', '', (!empty($server['HTTPS'])), true);
         } elseif (isset($cookies['lang'])) {
-            Locale::setDefault(Locale::canonicalize($cookies['lang']));
+            Locale::setDefault(Locale::getPrimaryLanguage($cookies['lang']));
         } elseif (isset($server['HTTP_ACCEPT_LANGUAGE'])) {
             $locale = Locale::acceptFromHttp($server['HTTP_ACCEPT_LANGUAGE']);
-            Locale::setDefault(Locale::canonicalize($locale));
+            Locale::setDefault(Locale::getPrimaryLanguage($locale));
         } else {
             Locale::setDefault('en_US');
         }

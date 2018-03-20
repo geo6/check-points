@@ -13,7 +13,7 @@ class TranslateFactory
     public function __invoke(ContainerInterface $container)
     {
         $translator = new Translator();
-        $translator->addTranslationFilePattern('gettext', '../locale', '%s/messages.mo');
+        $translator->addTranslationFilePattern('gettext', './data/locale', '%s/messages.mo');
 
         return new TranslateExtension($translator);
     }

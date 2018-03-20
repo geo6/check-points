@@ -49,6 +49,18 @@
         "clear-config-cache": "php bin/clear-config-cache.php",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "serve": "php -S 0.0.0.0:8080 -t public/"
+        "serve": "php -S 0.0.0.0:8080 -t public/",
+        "gettext": [
+            "@gettext:fr_BE:po",
+            "@gettext:nl_BE:po"
+        ],
+        "gettext:mo": [
+            "@gettext:fr_BE:mo",
+            "@gettext:nl_BE:mo"
+        ],
+        "gettext:fr_BE:po": "mkdir -p data/locale/fr && find templates/ -iname \"*.phtml\" | xargs xgettext --from-code=utf-8 --no-location --sort-by-file --join-existing --keyword=translate --keyword=translatePlural:1,2 --language=PHP --output-dir=data/locale/fr",
+        "gettext:fr_BE:mo": "msgfmt -c -o data/locale/fr/messages.mo data/locale/fr/messages.po",
+        "gettext:nl_BE:po": "mkdir -p data/locale/nl && find templates/ -iname \"*.phtml\" | xargs xgettext --from-code=utf-8 --no-location --sort-by-file --join-existing --keyword=translate --keyword=translatePlural:1,2 --language=PHP --output-dir=data/locale/nl",
+        "gettext:nl_BE:mo": "msgfmt -c -o data/locale/nl/messages.mo data/locale/nl/messages.po"
     }
 }
