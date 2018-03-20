@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Locale;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class LocalizationMiddleware implements MiddlewareInterface
 {
     public const LOCALIZATION_ATTRIBUTE = 'locale';
 
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $cookies = $request->getCookieParams();
         $query = $request->getQueryParams();
@@ -24,9 +24,9 @@ class LocalizationMiddleware implements MiddlewareInterface
             Locale::setDefault(Locale::canonicalize($query['lang']));
 
             if (isset($cookies['lang'])) {
-                setcookie('lang', false, null, null, null, (!empty($server['HTTPS'])), false);
+                setcookie('lang', false, 0, '', '', (!empty($server['HTTPS'])), true);
             }
-            setcookie('lang', Locale::getDefault(), null, null, null, (!empty($server['HTTPS'])), false);
+            setcookie('lang', Locale::getDefault(), 0, '', '', (!empty($server['HTTPS'])), true);
         } elseif (isset($cookies['lang'])) {
             Locale::setDefault(Locale::canonicalize($cookies['lang']));
         } elseif (isset($server['HTTP_ACCEPT_LANGUAGE'])) {
@@ -36,6 +36,6 @@ class LocalizationMiddleware implements MiddlewareInterface
             Locale::setDefault('en_US');
         }
 
-        return $delegate->process($request->withAttribute(self::LOCALIZATION_ATTRIBUTE, Locale::getDefault()));
+        return $handler->handle($request->withAttribute(self::LOCALIZATION_ATTRIBUTE, Locale::getDefault()));
     }
 }

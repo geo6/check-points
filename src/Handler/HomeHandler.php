@@ -2,31 +2,33 @@
 
 declare(strict_types=1);
 
-namespace App\Action;
+namespace App\Handler;
 
 use App\Middleware\ConfigMiddleware;
 use App\Middleware\DbAdapterMiddleware;
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class HomeAction implements MiddlewareInterface
+class HomeHandler implements RequestHandlerInterface
 {
+    private $containerName;
     private $router;
     private $template;
 
-    public function __construct(RouterInterface $router, TemplateRendererInterface $template)
+    public function __construct(RouterInterface $router, TemplateRendererInterface $template, string $containerName)
     {
+        $this->containerName = $containerName;
         $this->router = $router;
         $this->template = $template;
     }
 
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
         $config = $request->getAttribute(ConfigMiddleware::CONFIG_ATTRIBUTE);

@@ -1,6 +1,17 @@
-<?php $this->layout('layout::error', ['title' => 'Geocoder']) ?>
+<?php $this->layout('layout::default', ['title' => sprintf('%d %s', $status, $reason)]) ?>
 
-<div class="jumbotron mt-3">
-  <h1><i class="fas fa-exclamation-circle"></i> <?=_('Error 405 - Method Not Allowed')?></h1>
-  <?php var_dump($allowedMethods); ?>
+<?php $this->start('stylesheet') ?>
+    <link rel="stylesheet" href="./css/style.css">
+<?php $this->stop() ?>
+
+<div class="container">
+    <h1>Oops!</h1>
+    <h2>This is awkward.</h2>
+    <p>We encountered a <?=$this->e($status)?> <?=$this->e($reason)?> error.</p>
+    <?php if ($status == 404) : ?>
+        <p>
+            You are looking for something that doesn't exist or may have moved. Check out one of the links on this page
+            or head back to <a href="/">Home</a>.
+        </p>
+    <?php endif; ?>
 </div>

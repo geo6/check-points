@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Action\API;
+namespace App\Handler\API;
 
 use App\Middleware\ConfigMiddleware;
 use App\Middleware\DbAdapterMiddleware;
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\JsonResponse;
 
-class StatisticsAction implements MiddlewareInterface
+class StatisticsHandler implements RequestHandlerInterface
 {
     private $adapter;
     private $config;
 
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $this->adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
         $this->config = $request->getAttribute(ConfigMiddleware::CONFIG_ATTRIBUTE);

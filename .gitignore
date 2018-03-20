@@ -28,3 +28,4 @@ extras/documentation
 config/application
 public/css
 public/js
+.ftpconfig

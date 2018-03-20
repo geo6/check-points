@@ -1,7 +1,7 @@
 /*global $*/
 
 let fnAPIUpdate = function (id, data) {
-    return fetch('/app/check-points/api/object/' + id, {
+    return fetch('/app/check-points-auth/api/object/' + id, {
         body: JSON.stringify(data),
         cache: 'no-cache',
         credentials: 'same-origin',
@@ -16,7 +16,7 @@ let fnAPIUpdate = function (id, data) {
 };
 
 let fnAPIGet = function (id) {
-    return fetch('/app/check-points/api/object/' + id, {
+    return fetch('/app/check-points-auth/api/object/' + id, {
         cache: 'no-cache',
         credentials: 'same-origin',
         headers: new Headers({
@@ -30,7 +30,7 @@ let fnAPIGet = function (id) {
 };
 
 let fnAPIStatistics = function (data) {
-    return fetch('/app/check-points/api/statistics/?' + $.param(data), {
+    return fetch('/app/check-points-auth/api/statistics/?' + $.param(data), {
         cache: 'no-cache',
         credentials: 'same-origin',
         headers: new Headers({
