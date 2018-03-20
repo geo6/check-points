@@ -21,7 +21,7 @@ class ConfigProvider
             'templates'    => $this->getTemplates(),
             'plates'       => [
                 'extensions' => $this->getPlatesExentions(),
-            ]
+            ],
         ];
     }
 
@@ -45,7 +45,7 @@ class ConfigProvider
     }
 
     /**
-     * Returns the templates configuration
+     * Returns the templates configuration.
      */
     public function getTemplates() : array
     {
@@ -61,7 +61,7 @@ class ConfigProvider
     }
 
     /**
-     * Returns the Plates extentsions configuration
+     * Returns the Plates extentsions configuration.
      */
     public function getPlatesExentions() : array
     {

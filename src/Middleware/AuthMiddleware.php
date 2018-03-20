@@ -10,8 +10,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Authentication\AuthenticationService;
-use Zend\ConfigAggregator\ConfigAggregator;
-use Zend\ConfigAggregator\ZendConfigProvider;
 use Zend\Diactoros\Response\RedirectResponse;
 
 class AuthMiddleware implements MiddlewareInterface

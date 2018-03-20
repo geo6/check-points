@@ -12,10 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;
 use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Storage\Session as SessionStorage;
 use Zend\Db\Adapter\Adapter as DbAdapter;
-use Zend\Db\Sql\Expression;
-use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -51,11 +48,11 @@ class LoginHandler implements RequestHandlerInterface
                         parse_str($url['query'], $query);
 
                         $data = array_merge($query, [
-                            'lang' => $post['lang']
+                            'lang' => $post['lang'],
                         ]);
                     } else {
                         $data = [
-                            'lang' => $post['lang']
+                            'lang' => $post['lang'],
                         ];
                     }
 
@@ -117,7 +114,7 @@ class LoginHandler implements RequestHandlerInterface
                 'Login failed ({login}) : {message}',
                 [
                     'login'   => $query['login'],
-                    'message' => $message
+                    'message' => $message,
                 ],
                 \Zend\Log\Logger::WARN
             );
@@ -131,8 +128,8 @@ class LoginHandler implements RequestHandlerInterface
                     $config['authentication']['logfile'],
                     'Login failed ({login}) : {message}',
                     [
-                        'login' => $query['login'],
-                        'message' => $message
+                        'login'   => $query['login'],
+                        'message' => $message,
                     ],
                     \Zend\Log\Logger::WARN
                 );

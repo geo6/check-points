@@ -19,12 +19,11 @@
  * - The `debug` flag is _enabled_.
  * - Configuration caching is _disabled_.
  */
-
 declare(strict_types=1);
 
 use Zend\ConfigAggregator\ConfigAggregator;
 
 return [
-    'debug' => true,
+    'debug'                        => true,
     ConfigAggregator::ENABLE_CACHE => false,
 ];
