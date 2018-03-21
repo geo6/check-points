@@ -2,6 +2,9 @@
 composer.phar
 vendor/
 
+# NPM files
+node_modules/
+
 # Local configs
 config/autoload/*.local.php
 
@@ -15,18 +18,8 @@ data/sessions/
 data/tmp/
 temp/
 
-#Doctrine 2
-data/DoctrineORMModule/Proxy/
-data/DoctrineORMModule/cache/
-
-
-# Legacy ZF1
-demos/
-extras/documentation
-
 # Misc.
-config/application
-public/css
-public/js
+config/application/
+public/css/
+public/js/
 .ftpconfig
-data/locale/*/*.mo
