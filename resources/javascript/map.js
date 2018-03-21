@@ -6,12 +6,10 @@ import Control from 'ol/control';
 import Attribution from 'ol/control/attribution';
 import ScaleLine from 'ol/control/scaleline';
 import GeoJSON from 'ol/format/geojson';
-import Point from 'ol/geom/point';
 import TileLayer from 'ol/layer/tile';
 import VectorLayer from 'ol/layer/vector';
 import Map from 'ol/map';
 import Overlay from 'ol/overlay';
-import Proj from 'ol/proj';
 import OSMSource from 'ol/source/osm';
 import TileWMSSource from 'ol/source/tilewms';
 import VectorSource from 'ol/source/vector';
@@ -22,11 +20,6 @@ import Stroke from 'ol/style/stroke';
 import Style from 'ol/style/style';
 import Text from 'ol/style/text';
 import View from 'ol/view';
-
-import {
-    fnAPIUpdate,
-    fnAPIStatistics
-} from './api.js';
 
 import RotateNorthControl from './map.streetview.js';
 
@@ -46,7 +39,7 @@ let fnCreateTooltip = function () {
             return;
         }
 
-        window.app.tooltipElement.innerHTML = 'Click in the map to move the object';
+        window.app.tooltipElement.innerHTML = 'Click in the map to move<br>or locate the object';
         window.app.tooltip.setPosition(event.coordinate);
 
         window.app.tooltipElement.classList.remove('d-none');
@@ -54,30 +47,6 @@ let fnCreateTooltip = function () {
     window.app.map.getViewport().addEventListener('mouseout', function () {
         window.app.tooltipElement.classList.add('d-none');
     });
-};
-
-let fnPreEdit = function (id) {
-    window.app.source.forEachFeature(function(feature) {
-        feature.set('active', false);
-    });
-    window.app.source.getFeatureById(id).set('active', true);
-
-    window.app.map.addOverlay(window.app.tooltip);
-};
-
-let fnPostEdit = function (id) {
-    let tr = $('input[name=edit]:checked').closest('tr');
-
-    window.app.source.forEachFeature(function(feature) {
-        feature.set('active', null);
-    });
-    window.app.source.getFeatureById(id).setProperties({color: 'green'});
-
-    $('input[name=edit]:checked').prop('checked', false);
-    $(tr).removeClass('table-warning table-danger').addClass('table-success');
-    $(tr).find('td:eq(2)').html('<i class="fas fa-user fa-fw text-success"></i>');
-
-    window.app.map.removeOverlay(window.app.tooltip);
 };
 
 export default function initMap() {
@@ -187,51 +156,4 @@ export default function initMap() {
     }
 
     fnCreateTooltip();
-
-    $('#results > tbody > tr').on('click', function() {
-        let id = $(this).data('id');
-        let geometry = window.app.source.getFeatureById(id).getGeometry();
-        let zoom = window.app.map.getView().getZoom();
-
-        if (geometry !== null) {
-            window.app.map.getView().animate({
-                zoom: (zoom < 18 ? 18 : zoom),
-                center: geometry.getCoordinates()
-            });
-        }
-    });
-
-    $('input[name=edit]').on('change', function() {
-        let id = $(this).val();
-        let geometry = window.app.source.getFeatureById(id).getGeometry();
-
-        fnPreEdit(id);
-
-        window.app.map.once('click', function (event) {
-            let lnglat = Proj.toLonLat(event.coordinate);
-
-            fnAPIUpdate(id, {
-                longitude: lnglat[0],
-                latitude: lnglat[1],
-            }).
-                then(function () {
-                    return fnAPIStatistics(window.app.data.group);
-                }).
-                then(function (response) {
-                    $('.progress-bar.bg-success').css('width', response.green_pct + '%').prop('aria-valuenow', response.green_pct).text(Math.round(response.green_pct) + '%');
-                    $('.progress-bar.bg-warning').css('width', response.orange_pct + '%').prop('aria-valuenow', response.orange_pct).text(Math.round(response.orange_pct) + '%');
-                    $('.progress-bar.bg-danger').css('width', response.red_pct + '%').prop('aria-valuenow', response.red_pct).text(Math.round(response.red_pct) + '%');
-                });
-
-            if (geometry !== null) {
-                geometry.setCoordinates(event.coordinate);
-            } else {
-                window.app.source.getFeatureById(id).setGeometry(
-                    new Point(event.coordinate)
-                );
-            }
-
-            fnPostEdit(id);
-        });
-    });
 }

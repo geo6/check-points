@@ -2,12 +2,14 @@
 
 require('./fontawesome');
 
+import initEdit from './edit.js';
 import initMap from './map.js';
 import initModalInfo from './modal.info.js';
 import initNominatim from './nominatim.js';
 
 window.app = window.app || {};
 window.app.fn = {
+    initEdit: initEdit,
     initMap: initMap,
     initModalInfo: initModalInfo,
     initNominatim: initNominatim,
