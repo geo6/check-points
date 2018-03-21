@@ -61,6 +61,7 @@
         "gettext:fr_BE:po": "mkdir -p data/locale/fr && find templates/ -iname \"*.phtml\" | xargs xgettext --from-code=utf-8 --no-location --sort-by-file --join-existing --keyword=translate --keyword=translatePlural:1,2 --language=PHP --output-dir=data/locale/fr",
         "gettext:fr_BE:mo": "msgfmt -c -o data/locale/fr/messages.mo data/locale/fr/messages.po",
         "gettext:nl_BE:po": "mkdir -p data/locale/nl && find templates/ -iname \"*.phtml\" | xargs xgettext --from-code=utf-8 --no-location --sort-by-file --join-existing --keyword=translate --keyword=translatePlural:1,2 --language=PHP --output-dir=data/locale/nl",
-        "gettext:nl_BE:mo": "msgfmt -c -o data/locale/nl/messages.mo data/locale/nl/messages.po"
+        "gettext:nl_BE:mo": "msgfmt -c -o data/locale/nl/messages.mo data/locale/nl/messages.po",
+        "git:pull": "git fetch --all && git reset --hard origin/master && git pull origin master"
     }
 }
