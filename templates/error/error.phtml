@@ -1,17 +1,10 @@
 <?php $this->layout('layout::default', ['title' => sprintf('%d %s', $status, $reason)]) ?>
 
-<?php $this->start('stylesheet') ?>
-    <link rel="stylesheet" href="./css/style.css">
-<?php $this->stop() ?>
-
 <div class="container">
-    <h1>Oops!</h1>
-    <h2>This is awkward.</h2>
-    <p>We encountered a <?=$this->e($status)?> <?=$this->e($reason)?> error.</p>
+    <h1><?=$this->translate('Oops!')?></h1>
+    <h2><?=$this->translate('This is awkward.')?></h2>
+    <p><?=sprintf($this->translate('We encountered a "%d %s" error.'), $status, $reason)?></p>
     <?php if ($status == 404) : ?>
-        <p>
-            You are looking for something that doesn't exist or may have moved. Check out one of the links on this page
-            or head back to <a href="/">Home</a>.
-        </p>
+        <p><?=sprintf($this->translate('You are looking for something that doesn\'t exist or may have moved. Check out one of the links on this page or head back to <a href="%s">Home</a>.'), $this->url('home'))?></p>
     <?php endif; ?>
 </div>

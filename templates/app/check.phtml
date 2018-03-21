@@ -1,7 +1,6 @@
 <?php $this->layout('layout::default', $this->data()) ?>
 
 <?php $this->start('stylesheet') ?>
-    <link rel="stylesheet" href="../css/style.css">
     <style>
     .rotate-north {
         left: .5em;
@@ -14,7 +13,6 @@
 <?php $this->stop() ?>
 
 <?php $this->start('scripts') ?>
-    <script src="../js/check-point.min.js"></script>
     <script>
         window.app.data = {
             baselayers: <?=json_encode($baselayers)?>,
