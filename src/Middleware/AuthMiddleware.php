@@ -38,7 +38,7 @@ class AuthMiddleware implements MiddlewareInterface
 
                 $url = $request->getURI()->getPath();
                 if (!empty($request->getURI()->getQuery())) {
-                    $url .= $request->getURI()->getQuery();
+                    $url .= '?'.$request->getURI()->getQuery();
                 }
 
                 $redirect = $config['authentication']['path'];
