@@ -4,7 +4,7 @@
     <div class="row align-items-center justify-content-md-center">
         <div class="col-md-5">
             <h1><?=$this->translate('Restricted area')?></h1>
-            <form method="post" action="/app/check-points-auth/login/" class="card" autocomplete="off">
+            <form method="post" action="<?=$this->url('login.post')?>" class="card" autocomplete="off">
                 <div class="card-body">
                 <?php if (!empty($message)) : ?>
                     <p class="text-warning"><?=$message?></p>
