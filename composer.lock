@@ -1164,16 +1164,16 @@
         },
         {
             "name": "zendframework/zend-expressive-authentication-session",
-            "version": "0.4.0",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-authentication-session.git",
-                "reference": "9c71f6150921020402d8496213213e5a92cfe708"
+                "reference": "69c871e8c6be5a6b11c362ef982c1e9fa96bf3c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-authentication-session/zipball/9c71f6150921020402d8496213213e5a92cfe708",
-                "reference": "9c71f6150921020402d8496213213e5a92cfe708",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-authentication-session/zipball/69c871e8c6be5a6b11c362ef982c1e9fa96bf3c5",
+                "reference": "69c871e8c6be5a6b11c362ef982c1e9fa96bf3c5",
                 "shasum": ""
             },
             "require": {
@@ -1213,7 +1213,7 @@
                 "session",
                 "zf"
             ],
-            "time": "2018-03-15T18:28:27+00:00"
+            "time": "2018-03-20T15:11:36+00:00"
         },
         {
             "name": "zendframework/zend-expressive-fastroute",
