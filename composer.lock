@@ -1007,16 +1007,16 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "eb089eba44f7a0862a38867d17086e352c710f53"
+                "reference": "7cbc574376f0a6712c98a7fc2afdcc385dc5fc9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/eb089eba44f7a0862a38867d17086e352c710f53",
-                "reference": "eb089eba44f7a0862a38867d17086e352c710f53",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/7cbc574376f0a6712c98a7fc2afdcc385dc5fc9c",
+                "reference": "7cbc574376f0a6712c98a7fc2afdcc385dc5fc9c",
                 "shasum": ""
             },
             "require": {
@@ -1095,7 +1095,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-03-15T19:02:03+00:00"
+            "time": "2018-03-19T16:15:11+00:00"
         },
         {
             "name": "zendframework/zend-expressive-authentication",
