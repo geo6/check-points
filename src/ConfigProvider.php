@@ -20,8 +20,8 @@ class ConfigProvider
     {
         return [
             'authentication' => $this->getAuthentication(),
-            'dependencies' => $this->getDependencies(),
-            'plates' => [
+            'dependencies'   => $this->getDependencies(),
+            'plates'         => [
                 'extensions' => $this->getPlatesExensions(),
             ],
             'templates' => $this->getTemplates(),
@@ -31,8 +31,8 @@ class ConfigProvider
     /**
      * Returns the authentication dependencies.
      */
-     public function getAuthentication() : array
-     {
+    public function getAuthentication() : array
+    {
         return [
             'username' => 'login',
             'password' => 'password',

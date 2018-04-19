@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use App\Middleware\ConfigMiddleware;
-use App\Middleware\DbAdapterMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Router\RouterInterface;
