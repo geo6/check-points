@@ -12,7 +12,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class HomeHandler implements RequestHandlerInterface
@@ -32,6 +35,7 @@ class HomeHandler implements RequestHandlerInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
         $config = $request->getAttribute(ConfigMiddleware::CONFIG_ATTRIBUTE);
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         if (!is_array($config['group'])) {
             $config['group'] = [$config['group']];
@@ -103,6 +107,7 @@ class HomeHandler implements RequestHandlerInterface
         $data = [
             'title'      => ucwords(substr($config['name'], strpos($config['name'], '/') + 1), '-'),
             'params'     => $request->getQueryParams(),
+            'identity'   => $session->get(UserInterface::class),
             'group'      => $group,
             'current'    => $current,
             'last'       => ($current === end($config['group'])),

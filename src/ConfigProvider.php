@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use Zend\Expressive\Authentication;
+
 /**
  * The configuration provider for the App module.
  *
@@ -17,11 +19,24 @@ class ConfigProvider
     public function __invoke() : array
     {
         return [
+            'authentication' => $this->getAuthentication(),
             'dependencies' => $this->getDependencies(),
-            'templates'    => $this->getTemplates(),
-            'plates'       => [
-                'extensions' => $this->getPlatesExentions(),
+            'plates' => [
+                'extensions' => $this->getPlatesExensions(),
             ],
+            'templates' => $this->getTemplates(),
+        ];
+    }
+
+    /**
+     * Returns the authentication dependencies.
+     */
+     public function getAuthentication() : array
+     {
+        return [
+            'username' => 'login',
+            'password' => 'password',
+            'redirect' => '/app/check-points/login/',
         ];
     }
 
@@ -31,16 +46,31 @@ class ConfigProvider
     public function getDependencies() : array
     {
         return [
+            'aliases' => [
+                Authentication\UserRepositoryInterface::class => Authentication\UserRepository\PdoDatabase::class,
+                Authentication\AuthenticationInterface::class => Authentication\Session\PhpSession::class,
+            ],
             'invokables' => [
                 Handler\APIHandler::class   => Handler\APIHandler::class,
             ],
-            'factories'  => [
+            'factories' => [
                 Extension\TranslateExtension::class => Extension\Factory\TranslateFactory::class,
 
-                Handler\CheckHandler::class => Handler\Factory\CheckHandlerFactory::class,
-                Handler\HomeHandler::class  => Handler\Factory\HomeHandlerFactory::class,
-                Handler\LoginHandler::class => Handler\Factory\LoginHandlerFactory::class,
+                Handler\CheckHandler::class  => Handler\Factory\CheckHandlerFactory::class,
+                Handler\HomeHandler::class   => Handler\Factory\HomeHandlerFactory::class,
+                Handler\LoginHandler::class  => Handler\Factory\LoginHandlerFactory::class,
+                Handler\LogoutHandler::class => Handler\Factory\LogoutHandlerFactory::class,
             ],
+        ];
+    }
+
+    /**
+     * Returns the lates extensions configuration.
+     */
+    public function getPlatesExensions() : array
+    {
+        return [
+            Extension\TranslateExtension::class,
         ];
     }
 
@@ -57,16 +87,6 @@ class ConfigProvider
                 'partial'       => ['templates/partial'],
                 'partial.modal' => ['templates/partial/modal'],
             ],
-        ];
-    }
-
-    /**
-     * Returns the Plates extentsions configuration.
-     */
-    public function getPlatesExentions() : array
-    {
-        return [
-            Extension\TranslateExtension::class,
         ];
     }
 }

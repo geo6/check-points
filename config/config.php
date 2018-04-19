@@ -27,7 +27,6 @@ $aggregator = new ConfigAggregator([
     Zend\HttpHandlerRunner\ConfigProvider::class,
     Zend\I18n\ConfigProvider::class,
     Zend\Log\ConfigProvider::class,
-    Zend\Session\ConfigProvider::class,
 
     // Default App module config
     App\ConfigProvider::class,

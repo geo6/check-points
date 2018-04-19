@@ -9,13 +9,13 @@ use Psr\Http\Server\MiddlewareInterface;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class LoginHandlerFactory
+class LogoutHandlerFactory
 {
     public function __invoke(ContainerInterface $container) : MiddlewareInterface
     {
         $router = $container->get(RouterInterface::class);
         $template = $container->get(TemplateRendererInterface::class);
 
-        return new \App\Handler\LoginHandler($router, $template, get_class($container));
+        return new \App\Handler\LogoutHandler($router, $template, get_class($container));
     }
 }

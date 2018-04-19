@@ -12,16 +12,20 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\JsonResponse;
+use Zend\Expressive\Authentication\UserInterface;
+use Zend\Expressive\Session\SessionMiddleware;
 
 class ObjectHandler implements RequestHandlerInterface
 {
     private $adapter;
     private $config;
+    private $session;
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $this->adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
         $this->config = $request->getAttribute(ConfigMiddleware::CONFIG_ATTRIBUTE);
+        $this->session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         $id = $request->getAttribute('id');
 
@@ -53,6 +57,8 @@ class ObjectHandler implements RequestHandlerInterface
 
     private function put($id, $data)
     {
+        $user = $this->session->get(UserInterface::class);
+
         $sql = new Sql($this->adapter, $this->config['postgresql']['table']);
 
         $update = $sql->update();
@@ -64,8 +70,9 @@ class ObjectHandler implements RequestHandlerInterface
                     floatval($data['latitude']),
                 ]),
                 'status' => 1,
-                'update' => new Expression('hstore(\'datetime\', ?)', [
+                'update' => new Expression('hstore(\'datetime\', ?) || hstore(\'username\', ?)', [
                     date('c'),
+                    $user['username'],
                 ]),
             ]);
         }

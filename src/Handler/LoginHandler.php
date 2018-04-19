@@ -10,16 +10,19 @@ use Geo6\Zend\Log\Log;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;
 use Zend\Authentication\AuthenticationService;
 use Zend\Db\Adapter\Adapter as DbAdapter;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class LoginHandler implements RequestHandlerInterface
+class LoginHandler implements MiddlewareInterface
 {
     private $router;
     private $template;
@@ -30,16 +33,29 @@ class LoginHandler implements RequestHandlerInterface
         $this->template = $template;
     }
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
         $config = $request->getAttribute(ConfigMiddleware::CONFIG_ATTRIBUTE);
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
+
+        if ($session->has(UserInterface::class)) {
+            return new RedirectResponse($this->router->generateUri('home'));
+        }
 
         $query = $request->getQueryParams();
 
         if ($request->getMethod() === 'POST') {
             $post = $request->getParsedBody();
             $message = '';
+
+            $response = $handler->handle($request);
+            if ($response->getStatusCode() !== 302) {
+                return new RedirectResponse('/app/check-points/');
+            }
+
+            $message = 'Login Failure, please try again';
+/*
             if ($this->post($adapter, $config, $post, $message) === true) {
                 if (isset($post['redirect_to'])) {
                     $url = parse_url($post['redirect_to']);
@@ -63,6 +79,7 @@ class LoginHandler implements RequestHandlerInterface
 
                 return new RedirectResponse($redirect);
             }
+*/
         }
 
         $data = [
@@ -76,6 +93,7 @@ class LoginHandler implements RequestHandlerInterface
         return new HtmlResponse($this->template->render('app::login', $data));
     }
 
+/*
     private function post(DbAdapter $adapter, array $config, array $query, string &$message)
     {
         $auth = new AuthenticationService();
@@ -149,4 +167,5 @@ class LoginHandler implements RequestHandlerInterface
 
         return false;
     }
+*/
 }

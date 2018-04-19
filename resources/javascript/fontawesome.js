@@ -7,8 +7,10 @@ import faLanguage from '@fortawesome/fontawesome-free-solid/faLanguage';
 import faPenSquare from '@fortawesome/fontawesome-free-solid/faPenSquare';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
+import faSignOutAlt from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import faStreetView from '@fortawesome/fontawesome-free-solid/faStreetView';
 import faUser from '@fortawesome/fontawesome-free-solid/faUser';
+import faUserCircle from '@fortawesome/fontawesome-free-solid/faUserCircle';
 
 import faCheckCircle from '@fortawesome/fontawesome-free-regular/faCheckCircle';
 import faSave from '@fortawesome/fontawesome-free-regular/faSave';
@@ -23,6 +25,8 @@ fontawesome.library.add(
     faSave,
     faSearch,
     faSignInAlt,
+    faSignOutAlt,
     faStreetView,
-    faUser
+    faUser,
+    faUserCircle
 );
