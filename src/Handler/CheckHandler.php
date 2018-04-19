@@ -12,7 +12,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class CheckHandler implements RequestHandlerInterface
@@ -30,6 +32,7 @@ class CheckHandler implements RequestHandlerInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
         $config = $request->getAttribute(ConfigMiddleware::CONFIG_ATTRIBUTE);
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         $query = $request->getQueryParams();
         $group = [];
@@ -125,6 +128,7 @@ class CheckHandler implements RequestHandlerInterface
         $data = [
             'title'      => ucwords(substr($config['name'], strpos($config['name'], '/') + 1), '-'),
             'params'     => $request->getQueryParams(),
+            'identity'   => $session->get(UserInterface::class),
             'group'      => $group,
             'json'       => $json,
             'statistics' => $statistics,
