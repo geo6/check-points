@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use Zend\Expressive\Authentication;
-
 /**
  * The configuration provider for the App module.
  *
@@ -47,12 +45,8 @@ class ConfigProvider
     public function getDependencies() : array
     {
         return [
-            'aliases' => [
-                Authentication\UserRepositoryInterface::class => Authentication\UserRepository\PdoDatabase::class,
-                Authentication\AuthenticationInterface::class => Authentication\Session\PhpSession::class,
-            ],
             'invokables' => [
-                Handler\APIHandler::class   => Handler\APIHandler::class,
+                Handler\APIHandler::class => Handler\APIHandler::class,
             ],
             'factories' => [
                 Extension\TranslateExtension::class => Extension\Factory\TranslateFactory::class,
