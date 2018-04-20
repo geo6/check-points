@@ -18,6 +18,8 @@ $aggregator = new ConfigAggregator([
     Zend\Expressive\ConfigProvider::class,
     Zend\Expressive\Authentication\ConfigProvider::class,
     Zend\Expressive\Authentication\Session\ConfigProvider::class,
+    Zend\Expressive\Authorization\Acl\ConfigProvider::class,
+    Zend\Expressive\Authorization\ConfigProvider::class,
     Zend\Expressive\Helper\ConfigProvider::class,
     Zend\Expressive\Plates\ConfigProvider::class,
     Zend\Expressive\Router\ConfigProvider::class,

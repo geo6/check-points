@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Application;
 use Zend\Expressive\Authentication;
+use Zend\Expressive\Authorization;
 use Zend\Expressive\MiddlewareFactory;
 
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
@@ -35,6 +36,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
             $app->route($r[0], [
                 Authentication\AuthenticationMiddleware::class,
+                Authorization\AuthorizationMiddleware::class,
                 $r[1],
             ], $r[2], $r[3]);
         }
