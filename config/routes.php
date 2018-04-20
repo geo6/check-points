@@ -14,7 +14,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         ['/app/check-points/', App\Handler\HomeHandler::class, 'GET', 'home'],
         ['/app/check-points/check', App\Handler\CheckHandler::class, 'GET', 'check'],
 
-        ['/app/check-points/api/object/{id}', App\Handler\API\ObjectHandler::class, ['GET','PUT'], 'api.object'],
+        ['/app/check-points/api/object/{id}', App\Handler\API\ObjectHandler::class, ['GET', 'PUT'], 'api.object'],
         ['/app/check-points/api/statistics', App\Handler\API\StatisticsHandler::class, 'GET', 'api.statistics'],
     ];
 
@@ -35,7 +35,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
             $app->route($r[0], [
                 Authentication\AuthenticationMiddleware::class,
-                $r[1]
+                $r[1],
             ], $r[2], $r[3]);
         }
     } else {
