@@ -37,6 +37,7 @@ class ConfigProvider
             'username' => 'login',
             'password' => 'password',
             'redirect' => '/app/check-points/login/',
+            'logfile'  => 'data/logs/authentication.log',
         ];
     }
 

@@ -51,35 +51,27 @@ class LoginHandler implements MiddlewareInterface
 
             $response = $handler->handle($request);
             if ($response->getStatusCode() !== 302) {
-                return new RedirectResponse('/app/check-points/');
+                Log::write(
+                    $config['authentication']['logfile'],
+                    'Login succeeded ({login}).',
+                    [
+                        'login'  => $post['login'],
+                    ]
+                );
+
+                return new RedirectResponse($this->router->generateUri('home'));
             }
 
-            $message = 'Login Failure, please try again';
-            /*
-                        if ($this->post($adapter, $config, $post, $message) === true) {
-                            if (isset($post['redirect_to'])) {
-                                $url = parse_url($post['redirect_to']);
-            
-                                if (isset($url['query'])) {
-                                    parse_str($url['query'], $query);
-            
-                                    $data = array_merge($query, [
-                                        'lang' => $post['lang'],
-                                    ]);
-                                } else {
-                                    $data = [
-                                        'lang' => $post['lang'],
-                                    ];
-                                }
-            
-                                $redirect = $url['path'].'?'.http_build_query($data);
-                            } else {
-                                $redirect = $this->router->generateUri('home').'?'.http_build_query(['lang' => $post['lang']]);
-                            }
-            
-                            return new RedirectResponse($redirect);
-                        }
-            */
+            Log::write(
+                $config['authentication']['logfile'],
+                'Login failed ({login}).',
+                [
+                    'login'   => $post['login'],
+                ],
+                \Zend\Log\Logger::WARN
+            );
+
+            $message = 'Login failure, please try again.';
         }
 
         $data = [
@@ -92,80 +84,4 @@ class LoginHandler implements MiddlewareInterface
 
         return new HtmlResponse($this->template->render('app::login', $data));
     }
-
-    /*
-        private function post(DbAdapter $adapter, array $config, array $query, string &$message)
-        {
-            $auth = new AuthenticationService();
-    
-            $authAdapter = new AuthAdapter(
-                $adapter,
-                new TableIdentifier('user', 'access'),
-                'login',
-                'password',
-                function ($hash, $password) {
-                    if (password_needs_rehash($hash, PASSWORD_DEFAULT) === true) {
-                        Log::write(
-                            $config['authentication']['logfile'],
-                            'Login "({login})" needs password rehash.',
-                            [
-                                'login' => $query['login'],
-                            ],
-                            \Zend\Log\Logger::NOTICE
-                        );
-                    }
-    
-                    return password_verify($password, $hash);
-                }
-            );
-    
-            $authAdapter
-                ->setIdentity($query['login'])
-                ->setCredential($query['password']);
-    
-            $result = $auth->authenticate($authAdapter);
-    
-            if ($result->isValid() !== true) {
-                $message = implode(' ; ', $result->getMessages());
-    
-                Log::write(
-                    $config['authentication']['logfile'],
-                    'Login failed ({login}) : {message}',
-                    [
-                        'login'   => $query['login'],
-                        'message' => $message,
-                    ],
-                    \Zend\Log\Logger::WARN
-                );
-            } else {
-                $user = $authAdapter->getResultRowObject(['id', 'locked', 'fullname', 'email']);
-    
-                if ($user->locked !== false) {
-                    $message = 'Your account is currently locked.';
-    
-                    Log::write(
-                        $config['authentication']['logfile'],
-                        'Login failed ({login}) : {message}',
-                        [
-                            'login'   => $query['login'],
-                            'message' => $message,
-                        ],
-                        \Zend\Log\Logger::WARN
-                    );
-                } else {
-                    Log::write(
-                        $config['authentication']['logfile'],
-                        'Login succeeded ({login}).',
-                        [
-                            'login' => $query['login'],
-                        ]
-                    );
-    
-                    return true;
-                }
-            }
-    
-            return false;
-        }
-    */
 }

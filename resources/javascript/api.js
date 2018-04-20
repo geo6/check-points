@@ -30,7 +30,7 @@ let fnAPIGet = function (id) {
 };
 
 let fnAPIStatistics = function (data) {
-    return fetch('/app/check-points/api/statistics/?' + $.param(data), {
+    return fetch('/app/check-points/api/statistics?' + $.param(data), {
         cache: 'no-cache',
         credentials: 'same-origin',
         headers: new Headers({

@@ -21,7 +21,7 @@
         <?php foreach ($statistics as $k => $s): ?>
             <tr>
                 <th>
-                    <a href="<?=($last === true || (!is_null($limit) && $s['total'] <= $limit) ? './check/?' : './?').http_build_query($group).'&amp;'.$this->escape($current)?>=<?=$this->escape($k)?>"><?=$this->escape($k)?></a>
+                    <a href="<?=($last === true || (!is_null($limit) && $s['total'] <= $limit) ? './check?' : '?').http_build_query($group).'&amp;'.$this->escape($current)?>=<?=$this->escape($k)?>"><?=$this->escape($k)?></a>
                 </th>
                 <td class="text-right"><?=$s['total']?></td>
                 <td style="width: 50%;">

@@ -9,14 +9,6 @@
                 <?php if (!empty($message)) : ?>
                     <p class="text-warning"><?=$message?></p>
                     <hr>
-                <?php elseif (!empty($redirectTo) && $noLogin === true) : ?>
-                    <input type="hidden" name="redirect_to" value="<?=$this->e($redirectTo)?>">
-                    <p class="text-warning"><?=$this->translate('The requested URL is protected. Please enter your login and password below.')?></p>
-                    <hr>
-                <?php elseif (!empty($redirectTo) && $noLogin === false) : ?>
-                    <input type="hidden" name="redirect_to" value="<?=$this->e($redirectTo)?>">
-                    <p class="text-warning"><?=$this->translate('The requested URL is protected. Your login does not give you access to this resource.')?></p>
-                    <hr>
                 <?php endif ?>
                     <div class="form-group">
                         <label class="control-label" for="inputLogin"><?=$this->translate('Login')?></label>

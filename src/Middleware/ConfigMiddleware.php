@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use App\ConfigProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -18,6 +19,7 @@ class ConfigMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $config = new ConfigAggregator([
+            ConfigProvider::class,
             new ZendConfigProvider('./composer.json'),
             new ZendConfigProvider('./config/application/*.{php,ini,xml,json,yaml}'),
         ]);
