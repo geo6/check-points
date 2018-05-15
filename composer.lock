@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6067df13ef2062d23695bb45ac18b5a1",
+    "content-hash": "6c4e929252be4cc9cf896f7ca1f75612",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1619,16 +1619,16 @@
         },
         {
             "name": "zendframework/zend-expressive-session-ext",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session-ext.git",
-                "reference": "0735a9ab2a09eae52a7793fa5722dc7ac848d048"
+                "reference": "b1102131c1e2293026a15b82d1ea459b8f3a9dcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/0735a9ab2a09eae52a7793fa5722dc7ac848d048",
-                "reference": "0735a9ab2a09eae52a7793fa5722dc7ac848d048",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/b1102131c1e2293026a15b82d1ea459b8f3a9dcb",
+                "reference": "b1102131c1e2293026a15b82d1ea459b8f3a9dcb",
                 "shasum": ""
             },
             "require": {
@@ -1674,7 +1674,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-05-10T17:34:33+00:00"
+            "time": "2018-05-14T15:11:54+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",
